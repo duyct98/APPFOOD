@@ -237,7 +237,7 @@ INSERT INTO tbl_hangban (CuaHangID,TenHang,DonVi,DonGia) VALUES ('1', N'Bánh tr
 INSERT INTO tbl_hangban (CuaHangID,TenHang,DonVi,DonGia) VALUES ('1', N'Bánh mì nướng', '', '20000')
 
 select * from tbl_hangban
-INSERT INTO tbl_hangban(loai,TenHang,DonVi,DonGia,Anh)
+update tbl_hangban(loai,TenHang,DonVi,DonGia,Anh)
 select 'ruoubia', N'Bánh tráng trộn', '', 30000 , BulkColumn from openrowset (bulk N'C:\Users\Admin\Downloads\APP KHACH CHUAN\ITEM FOOD\banhtrangtron.jpg',SINGLE_BLOB) as Picture
 
 INSERT INTO tbl_hangban(loai,TenHang,DonVi,DonGia,Anh)
@@ -280,27 +280,32 @@ SELECT @@IDENTITY asLastID
 
 insert into tbl_hang(DonHangID,HangID,SoLuong) values (1,1,3)
 
-
-select TenHang,SoLuong,dh.DonHangID,DonGia
+create view view_Hoadon1 as
+select TenHang,SoLuong,dh.DonHangID,DonGia,hb.HangID
 from tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid
 inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID
-where dh.DonHangID = '13'
-group by TenHang,SoLuong,dh.DonHangID,DonGia
 
-select dh.DonHangID,sum(DonGia*SoLuong)as 'TỔng bill'
+group by TenHang,SoLuong,dh.DonHangID,DonGia,hb.HangID
+
+create view view_Bill1 as
+select dh.DonHangID,sum(DonGia*SoLuong)as 'tongbill'
 from tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid
 inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID
-where dh.DonHangID = '13'
 group by dh.DonHangID
 
 insert into tbl_DonHang(CuaHangID,KhachID) values (1,1)
 
-select Count(HangID) from tbl_HangBan where cuahangid= 1
+select Count(HangID) from tbl_hang where DonHangID= 1
 
-select * from tbl_DonHang
+select sum(SoLuong*dongia) from tbl_hang
 
 
 insert tbl_DonHang(NgayBan,KhachID) values (GETDATE(),1)
 SELECT @@IDENTITY asLastID
 
 insert tbl_hang(DonHangID,HangID,SoLuong) values (1,1,1)
+
+delete tbl_hangban where hangid = '14'
+
+select * from view_Hoadon
+select * from tbl_DonHang

@@ -92,8 +92,6 @@ namespace APP_KHACH_CHUAN
 
         }
 
-
-        
         public void setKhachId()
         {
             khachid = Convert.ToInt32(Laydatasql("select khachid from tbl_khach where khachid= '"+LOGIN.taikhoan+"'"));
@@ -277,7 +275,7 @@ namespace APP_KHACH_CHUAN
             }
             else
             {
-                for (int i = 0; i < Convert.ToInt32(Laydatasql(@"select Count(HangID) from tbl_HangBan where loai= 'monanchinh'")); i++)
+                for (int i = 0; i < Convert.ToInt32(Laydatasql(@"select Count(HangID) from tbl_HangBan where loai= 'nuocuong'")); i++)
                 {
 
 

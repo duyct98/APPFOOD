@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APP KHACH CHUAN", "APP KHACH CHUAN\APP KHACH CHUAN.csproj", "{75A84E1D-F870-454B-80B5-BA7012F4E474}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CUAHANG", "CUAHANG\CUAHANG.csproj", "{BA26188F-F0AC-438A-943D-E1D693D9D898}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{75A84E1D-F870-454B-80B5-BA7012F4E474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75A84E1D-F870-454B-80B5-BA7012F4E474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75A84E1D-F870-454B-80B5-BA7012F4E474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA26188F-F0AC-438A-943D-E1D693D9D898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA26188F-F0AC-438A-943D-E1D693D9D898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA26188F-F0AC-438A-943D-E1D693D9D898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA26188F-F0AC-438A-943D-E1D693D9D898}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

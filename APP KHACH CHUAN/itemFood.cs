@@ -21,7 +21,20 @@ namespace APP_KHACH_CHUAN
         public int idFood = 0;
         public string tenFood = null;
         public Double giaFood=0;
-        
+        public static int getCount;
+        public static int dem = 1;
+        Form1 f1 = new Form1();
+        public itemFood()
+        {
+
+            InitializeComponent();
+        }
+        public static List<itemFood> listfood = new List<itemFood>();
+        public static List<itemFood> listThucUong = new List<itemFood>();
+        public static List<itemFood> listRuouBia = new List<itemFood>();
+        public static List<itemFood> listAnVat = new List<itemFood>();
+        public static List<itemFood> listAnChinh = new List<itemFood>();
+
         public event EventHandler BtnThem_Click;
         public event EventHandler BtnHuy_Click;
         
@@ -37,16 +50,7 @@ namespace APP_KHACH_CHUAN
 
 
 
-        public itemFood()
-        {
-            
-            InitializeComponent();
-        }
-        public static List<itemFood> listfood = new List<itemFood>();
-        public static List<itemFood> listThucUong = new List<itemFood>();
-        public static List<itemFood> listRuouBia = new List<itemFood>();
-        public static List<itemFood> listAnVat = new List<itemFood>();
-        public static List<itemFood> listAnChinh = new List<itemFood>();
+        
 
         public int count { get; set; }
         private void btnThem_Click(object sender, EventArgs e)
@@ -57,9 +61,7 @@ namespace APP_KHACH_CHUAN
             
             
         }
-        public static int getCount; 
-        
-        
+       
         
         private void sqlcode(string data) // select * fromm ....
         {
@@ -95,8 +97,7 @@ namespace APP_KHACH_CHUAN
         {
             return Convert.ToDouble(txtGiaFood.Text);
         }
-        public static int dem=1;
-        Form1 f1 = new Form1();
+       
         public void dataFood()
         {
             while (true)

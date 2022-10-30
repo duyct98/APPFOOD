@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace APP_KHACH_CHUAN
+namespace CUAHANG
 {
     internal static class Program
     {
@@ -16,8 +16,7 @@ namespace APP_KHACH_CHUAN
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LOGIN());
-
+            Application.Run(new CUAHANG());
         }
     }
 }
