@@ -20,8 +20,8 @@ create table tbl_CuaHang
 CREATE TABLE tbl_DonHang
 (	
 	
-	DonHangID INT IDENTITY (1,1)primary key,
-	NgayBan date,
+	DonHangID INT IDENTITY (1000,1)primary key,
+	NgayBan datetime,
 	KhachID INT,
 	
 	
@@ -266,6 +266,10 @@ SET MATKHAU = '1234'
 WHERE sdt='0001'
 
 select * from tbl_khach
+
+(delete tbl_khach where KhachID=;
+
+
 select * from tbl_hang
 select * from tbl_DonHang
 select * from tbl_hangban
@@ -280,18 +284,20 @@ SELECT @@IDENTITY asLastID
 
 insert into tbl_hang(DonHangID,HangID,SoLuong) values (1,1,3)
 
-create view view_Hoadon1 as
-select TenHang,SoLuong,dh.DonHangID,DonGia,hb.HangID
+create view view_Hoadon2 as
+select TenHang,SoLuong,dh.DonHangID,DonGia,hb.HangID,Anh
 from tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid
 inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID
 
-group by TenHang,SoLuong,dh.DonHangID,DonGia,hb.HangID
+group by TenHang,SoLuong,dh.DonHangID,DonGia,hb.HangID,Anh
 
-create view view_Bill1 as
-select dh.DonHangID,sum(DonGia*SoLuong)as 'tongbill'
+
+select h.HangID,TenHang,SoLuong,DonGia
 from tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid
-inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID
-group by dh.DonHangID
+
+where h.DonHangID = 1022
+group by  h.HangID,TenHang,SoLuong,DonGia
+
 
 insert into tbl_DonHang(CuaHangID,KhachID) values (1,1)
 
@@ -305,7 +311,34 @@ SELECT @@IDENTITY asLastID
 
 insert tbl_hang(DonHangID,HangID,SoLuong) values (1,1,1)
 
-delete tbl_hangban where hangid = '14'
+delete tbl_DonHang where DonHangID = 7
 
-select * from view_Hoadon
+select * from view_Hoadon2
+select sum(DonGia*SoLuong) from view_Hoadon2 where DonHangID = 1
+
+select COUNT(hangid)from view_Hoadon2 where DonHangID = 11
+
+
+select tenhang from view_Hoadon1 where hangid=1 and donhangid =2
+
+select HangID from view_Hoadon2 where DonHangID = 11 and HangID= 6
+
+
+delete from tbl_hang
+where DonHangID = '11'
+delete from tbl_DonHang
+where DonHangID = '11'
+
+SELECT MONTH(GETDATE())
+
+ 
+
 select * from tbl_DonHang
+INSERT tbl_DonHang(NgayBan) values ('2022-9-22')
+
+select dh.DonHangID,sum(DonGia*SoLuong)as 'tongbill',dh.NgayBan
+from tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID 
+group by dh.DonHangID,dh.NgayBan 
+order by 'tongbill' asc
+
+view_Bill1

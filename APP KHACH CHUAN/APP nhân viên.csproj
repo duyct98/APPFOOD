@@ -52,11 +52,23 @@
     <Compile Include="DangKi.Designer.cs">
       <DependentUpon>DangKi.cs</DependentUpon>
     </Compile>
+    <Compile Include="DONHANG.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DONHANG.Designer.cs">
+      <DependentUpon>DONHANG.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ItemDatHang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ItemDatHang.Designer.cs">
+      <DependentUpon>ItemDatHang.cs</DependentUpon>
     </Compile>
     <Compile Include="itemFood.cs">
       <SubType>UserControl</SubType>
@@ -70,11 +82,23 @@
     <Compile Include="itemFoodDonHang.Designer.cs">
       <DependentUpon>itemFoodDonHang.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListHoaDon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ListHoaDon.Designer.cs">
+      <DependentUpon>ListHoaDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="LOGIN.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LOGIN.Designer.cs">
       <DependentUpon>LOGIN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MENUThemItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MENUThemItem.Designer.cs">
+      <DependentUpon>MENUThemItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +113,12 @@
     <Compile Include="ShopFood.Designer.cs">
       <DependentUpon>ShopFood.cs</DependentUpon>
     </Compile>
+    <Compile Include="thongTinDonHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="thongTinDonHang.Designer.cs">
+      <DependentUpon>thongTinDonHang.cs</DependentUpon>
+    </Compile>
     <Compile Include="THUCUONG.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,8 +128,14 @@
     <EmbeddedResource Include="DangKi.resx">
       <DependentUpon>DangKi.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DONHANG.resx">
+      <DependentUpon>DONHANG.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemDatHang.resx">
+      <DependentUpon>ItemDatHang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="itemFood.resx">
       <DependentUpon>itemFood.cs</DependentUpon>
@@ -107,8 +143,14 @@
     <EmbeddedResource Include="itemFoodDonHang.resx">
       <DependentUpon>itemFoodDonHang.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ListHoaDon.resx">
+      <DependentUpon>ListHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LOGIN.resx">
       <DependentUpon>LOGIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MENUThemItem.resx">
+      <DependentUpon>MENUThemItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -122,6 +164,9 @@
     </Compile>
     <EmbeddedResource Include="ShopFood.resx">
       <DependentUpon>ShopFood.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="thongTinDonHang.resx">
+      <DependentUpon>thongTinDonHang.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

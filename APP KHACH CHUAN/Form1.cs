@@ -30,7 +30,7 @@ namespace APP_KHACH_CHUAN
             InitializeComponent();
 
         }
-        public string strcon = "Data Source=ADMIN;Initial Catalog=QL_APPFOODtest45;Integrated Security=True";
+        public string strcon = "Data Source=.;Initial Catalog=QL_APPFOODtest45;Integrated Security=True";
         public void sqlcode(string data) // select * fromm ....
         {
             SqlConnection conn = new SqlConnection(strcon);
@@ -57,13 +57,13 @@ namespace APP_KHACH_CHUAN
             command.CommandText = codesql;
             command.Connection = conn;
             SqlDataReader reader = command.ExecuteReader();
-            
+
             while (reader.Read())
             {
                 data = reader.GetValue(0).ToString();
-               
-             
-                
+
+
+
             }
 
             conn.Close();
@@ -71,16 +71,22 @@ namespace APP_KHACH_CHUAN
             return data;
 
         }
-        
-        
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            btnBack_Click(sender,e);
-
-
+            btnBack_Click(sender, e);
+            refreshHoaDon();
+            thongTinDonHang.BtnHoanThanhDonHang_Click += BtnHoanThanhDonHang_Click;
+            LoadHoaDon();
+            groupMenu.Show();
+            GroupQUANLI.Hide();
+            homePanel.Controls.Clear();
+            btnBack_Click(sender, e);
 
         }
-        
+       
+
         private void listDonHang_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -88,40 +94,74 @@ namespace APP_KHACH_CHUAN
 
         public void itemFood1_BtnThem_Click(object sender, EventArgs e)
         {
-            
+
 
         }
 
         public void setKhachId()
         {
-            khachid = Convert.ToInt32(Laydatasql("select khachid from tbl_khach where khachid= '"+LOGIN.taikhoan+"'"));
+            khachid = Convert.ToInt32(Laydatasql("select khachid from tbl_khach where khachid= '" + LOGIN.taikhoan + "'"));
         }
-       
-        public void btnThanhToan_Click(object sender, EventArgs e)
+        List<ListHoaDon> listhoadon = new List<ListHoaDon>();
+        public void refreshHoaDon()
         {
-            
-            int donhangid = Convert.ToInt32(Laydatasql("insert tbl_DonHang(NgayBan,KhachID) values (GETDATE(),"+khachid+") SELECT @@IDENTITY asLastID"));
-           
-            for (int i = 0; i < itemFoodDonHang.listDatHang.Count ; i++)
+            listhoadon.Clear();
+            panelHoaDon.Controls.Clear();
+            int donhangid = 1000;
+            for (int i = 0; i < Convert.ToInt32(Laydatasql("select Count(donhangid) from tbl_donhang ")); i++)
             {
 
-                if (itemFoodDonHang.listDatHang[i].getSoLuong() > 0)
+                while (true)
                 {
-                    int idfood = itemFoodDonHang.listDatHang[i].getIDFood();
-                    int soluong = itemFoodDonHang.listDatHang[i].getSoLuong();
-                    
-                    sqlcode("insert into tbl_hang(Donhangid,hangid,soluong) values ("+donhangid+",'" + idfood + "','" + soluong + "')");
+
+                    listhoadon.Add(new ListHoaDon());
+
+                    int test = Convert.ToInt32(Laydatasql("select donhangid from tbl_donhang where donhangid = '" + donhangid + "'"));
+                    if (test != 0)
+                    {
+                        listhoadon[i].donHangID = donhangid;
+                        panelHoaDon.Controls.Add(listhoadon[i]);
+                        donhangid++;
+                        break;
+                    }
+                    donhangid++;
+
 
                 }
 
 
 
             }
-            itemFoodDonHang.listDatHang.Clear();
+        }
+        public void btnThanhToan_Click(object sender, EventArgs e)
+        {
+
+            int donhangid = Convert.ToInt32(Laydatasql("insert tbl_DonHang(NgayBan,KhachID) values ('"+dateTimePicker2.Value +"'," + khachid + ") SELECT @@IDENTITY asLastID"));
+
+            for (int i = 0; i < itemFoodDonHang.listDatHang.Count; i++)
+            {
+
+                if (itemFoodDonHang.listDatHang[i].getSoLuong() > 0)
+                {
+                    int idfood = itemFoodDonHang.listDatHang[i].getIDFood();
+                    int soluong = itemFoodDonHang.listDatHang[i].getSoLuong();
+
+                    sqlcode("insert into tbl_hang(Donhangid,hangid,soluong) values (" + donhangid + ",'" + idfood + "','" + soluong + "')");
+
+                }
+
+
+
+            }
+            for (int i = 0; i < itemFoodDonHang.listDatHang.Count; i++)
+            {
+                itemFoodDonHang.listDatHang[i].resetSolLuong();
+            }
+
             panelDonHang.Controls.Clear();
             txtGia.Text = 0.ToString();
             MessageBox.Show("Đặt hàng thành công !!!!");
-
+            refreshHoaDon();
 
         }
 
@@ -134,7 +174,7 @@ namespace APP_KHACH_CHUAN
         {
 
         }
-        
+
         public void itemFood_BtnThem_Click(object sender, EventArgs e)
         {
 
@@ -146,7 +186,7 @@ namespace APP_KHACH_CHUAN
             double gia = itemFoodDonHang.listDatHang[itemFood.getCount].getGiaFood();
             txtGia.Text = (gia + Convert.ToDouble(txtGia.Text)).ToString("0,000");
 
-            
+
 
 
 
@@ -154,7 +194,7 @@ namespace APP_KHACH_CHUAN
         private void itemFood_BtnHuy_Click(object sender, EventArgs e)
         {
 
-            
+
             if (itemFoodDonHang.listDatHang[itemFood.getCount].getSoLuong() == 1)
             {
                 panelDonHang.Controls.Remove(itemFoodDonHang.listDatHang[itemFood.getCount]);
@@ -164,11 +204,11 @@ namespace APP_KHACH_CHUAN
 
             double gia = itemFoodDonHang.listDatHang[itemFood.getCount].getGiaFood();
 
-            if (Convert.ToDouble(txtGia.Text) > 0&& itemFoodDonHang.listDatHang[itemFood.getCount].getSoLuong()>0)
+            if (Convert.ToDouble(txtGia.Text) > 0 && itemFoodDonHang.listDatHang[itemFood.getCount].getSoLuong() > 0)
             {
                 txtGia.Text = (Convert.ToDouble(txtGia.Text) - gia).ToString();
             }
-            
+
 
 
         }
@@ -177,58 +217,58 @@ namespace APP_KHACH_CHUAN
         {
 
         }
-        
-       
+
+
 
         private void label4_Click(object sender, EventArgs e)
         {
 
         }
 
-       
+
 
         private void groupMenu_Enter(object sender, EventArgs e)
         {
 
         }
 
-       
+
 
         private void groupDangNhap_Enter(object sender, EventArgs e)
         {
 
         }
 
-      
-       
+
+
 
         private void label10_Click(object sender, EventArgs e)
         {
 
         }
 
-       
+
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
+
         }
 
-      
+
 
         private void button3_Click(object sender, EventArgs e)
         {
-           
+
         }
         private void PictureBox1_Click(object sender, EventArgs e)
-        { 
+        {
             homePanel.Controls.Clear();
 
             itemFood.listfood.Clear();
             itemFoodDonHang.listDatHang.Clear();
 
             itemFood.dem = 1;
-            
+
             for (int i = 0; i < Convert.ToInt32(Laydatasql(@"select Count(HangID) from tbl_HangBan where cuahangid= '" + getIDShop() + "'")); i++)
             {
                 itemFood.listfood.Add(new itemFood());
@@ -241,21 +281,21 @@ namespace APP_KHACH_CHUAN
                 itemFoodDonHang.listDatHang[i].setIDFood(itemFood.listfood[i].getIDFood());
                 itemFoodDonHang.listDatHang[i].setTenFood(itemFood.listfood[i].getTenFood());
                 itemFoodDonHang.listDatHang[i].SetGiaFood(itemFood.listfood[i].getGiaFood());
-               
+
                 itemFood.listfood[i].count = i;
                 itemFoodDonHang.listDatHang[i].count = i;
 
 
                 homePanel.Controls.Add(itemFood.listfood[i]);
-               
+
             }
 
             for (int i = 0; i < Convert.ToInt32(Laydatasql(@"select Count(CuaHangID) from tbl_CuaHang")); i++)
             {
-               
-                ShopFood.listShopFood[i].PictureBox1_Click -=  PictureBox1_Click;
 
-                
+                ShopFood.listShopFood[i].PictureBox1_Click -= PictureBox1_Click;
+
+
 
             }
         }
@@ -295,7 +335,7 @@ namespace APP_KHACH_CHUAN
                     itemFoodDonHang.getCount++;
 
                 }
-                textBox2.Text = itemFoodDonHang.getCount.ToString();
+              
             }
 
 
@@ -331,7 +371,7 @@ namespace APP_KHACH_CHUAN
         }
         private void groupDatHangThanhCong_Enter(object sender, EventArgs e)
         {
-            
+
         }
 
         private void txtUser_TextChanged(object sender, EventArgs e)
@@ -343,12 +383,12 @@ namespace APP_KHACH_CHUAN
         {
 
         }
-        
-            
+
+
         private void button4_Click(object sender, EventArgs e)
         {
-            homePanel.BackColor=  System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            
+            homePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+
             homePanel.Controls.Clear();
             itemFood.dem = 0;
             if (itemFood.listRuouBia.Count > 0)
@@ -385,19 +425,19 @@ namespace APP_KHACH_CHUAN
         }
 
 
-        
-   
+
+
 
         private void button2_Click_1(object sender, EventArgs e)
         {
             homePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            
+
             homePanel.Controls.Clear();
             itemFood.dem = 0;
 
-            if (itemFood.listAnChinh.Count>0)
+            if (itemFood.listAnChinh.Count > 0)
             {
-                for(int i = 0; i < itemFood.listAnChinh.Count; i++)
+                for (int i = 0; i < itemFood.listAnChinh.Count; i++)
                 {
                     homePanel.Controls.Add(itemFood.listAnChinh[i]);
                 }
@@ -424,18 +464,18 @@ namespace APP_KHACH_CHUAN
                     itemFoodDonHang.getCount++;
 
                 }
-                textBox2.Text = itemFoodDonHang.getCount.ToString();
+              
             }
 
         }
 
         private void btnAnVat_Click(object sender, EventArgs e)
         {
-           
-                homePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
 
-                homePanel.Controls.Clear();
-                itemFood.dem = 0;
+            homePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+
+            homePanel.Controls.Clear();
+            itemFood.dem = 0;
             if (itemFood.listAnVat.Count > 0)
             {
                 for (int i = 0; i < itemFood.listAnVat.Count; i++)
@@ -447,7 +487,7 @@ namespace APP_KHACH_CHUAN
             {
                 for (int i = 0; i < Convert.ToInt32(Laydatasql(@"select Count(HangID) from tbl_HangBan where loai= 'anvat'")); i++)
                 {
-                    
+
 
                     itemFood.listAnVat.Add(new itemFood());
                     itemFood.listAnVat[i].getDataFood("anvat");
@@ -465,19 +505,165 @@ namespace APP_KHACH_CHUAN
 
                     itemFoodDonHang.getCount++;
                 }
-                
+
             }
-            
+
         }
 
         private void btnHuyDon_Click(object sender, EventArgs e)
         {
             txtGia.Text = 0.ToString();
-            for(int i=0; i < itemFoodDonHang.listDatHang.Count; i++)
+            for (int i = 0; i < itemFoodDonHang.listDatHang.Count; i++)
             {
                 itemFoodDonHang.listDatHang[i].resetSolLuong();
             }
             panelDonHang.Controls.Clear();
+        }
+
+        private void btnDanhSachDonDatHang_Click(object sender, EventArgs e)
+        {
+            refreshHoaDon();
+        }
+        private void BtnHoanThanhDonHang_Click(object sender, EventArgs e)
+        {
+            refreshHoaDon();
+        }
+
+        private void panelHoaDon_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dataHoaDon_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                //Lưu lại dòng dữ liệu vừa kích chọn
+                DataGridViewRow row = this.dataHoaDon.Rows[e.RowIndex];
+                //Đưa dữ liệu vào textbox
+                txtdonhangid.Text = row.Cells[0].Value.ToString();
+                txtTongHoaDon.Text =Convert.ToInt32(row.Cells[1].Value).ToString("0,000");
+                txtNgayBan.Text = row.Cells[2].Value.ToString();
+               
+                LoadThongTinHoaDon();
+                //Không cho phép sửa trường STT
+
+            }
+        }
+        private void LoadHoaDon()
+        {
+            SqlConnection cnn = new SqlConnection(strcon);
+            cnn.Open();
+            string sql = "select dh.DonHangID,sum(DonGia*SoLuong) as 'tongbill',dh.NgayBan \r\nfrom tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid \r\ninner join tbl_DonHang dh on dh.DonHangID = h.DonHangID \r\ngroup by dh.DonHangID,dh.NgayBan ";  // lay het du lieu trong bang sinh vien
+            SqlCommand com = new SqlCommand(sql, cnn); //bat dau truy van
+            com.CommandType = CommandType.Text;
+            SqlDataAdapter da = new SqlDataAdapter(com); //chuyen du lieu ve
+            DataTable dt = new DataTable(); //tạo một kho ảo để lưu trữ dữ liệu
+            da.Fill(dt);  // đổ dữ liệu vào kho
+            cnn.Close();  // đóng kết nối
+            dataHoaDon.DataSource = dt;
+        }
+        private void LoadThongTinHoaDon()
+        {
+            DataThongTinHoaDon.Controls.Clear();
+            SqlConnection cnn = new SqlConnection(strcon);
+            cnn.Open();
+            string sql = " select h.HangID,TenHang,SoLuong,DonGia from tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid where h.DonHangID = '"+txtdonhangid.Text+"' group by  h.HangID,TenHang,SoLuong,DonGia";  // lay het du lieu trong bang sinh vien
+            SqlCommand com = new SqlCommand(sql, cnn); //bat dau truy van
+            com.CommandType = CommandType.Text;
+            SqlDataAdapter da = new SqlDataAdapter(com); //chuyen du lieu ve
+            DataTable dt = new DataTable(); //tạo một kho ảo để lưu trữ dữ liệu
+            da.Fill(dt);  // đổ dữ liệu vào kho
+            cnn.Close();  // đóng kết nối
+            DataThongTinHoaDon.DataSource = dt;
+        }
+        public int i = 0;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+            i++;
+            GroupQUANLI.Show();
+            groupMenu.Hide();
+            dateTimePicker1_ValueChanged(sender, e);
+            button1.Text = "BACK";
+            
+            if (i % 2 ==0)
+            {
+                button1.Text = "MỤC DÀNH CHO QUẢN LÝ";
+                GroupQUANLI.Hide();
+                groupMenu.Show();
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string sql=null;
+            if (comboBox1.SelectedIndex == 0)
+            {
+                sql = "select dh.DonHangID,sum(DonGia*SoLuong)as 'tongbill',dh.NgayBan\r\nfrom tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID \r\ngroup by dh.DonHangID,dh.NgayBan \r\norder by 'tongbill' asc";  // lay het du lieu trong bang sinh vien
+
+            }
+            if (comboBox1.SelectedIndex == 1)
+            {
+                sql = "select dh.DonHangID,sum(DonGia*SoLuong)as 'tongbill',dh.NgayBan\r\nfrom tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID \r\ngroup by dh.DonHangID,dh.NgayBan \r\norder by 'tongbill' desc";  // lay het du lieu trong bang sinh vien
+
+            }
+          
+            if (comboBox1.SelectedIndex == 2)
+            {
+                sql = "select dh.DonHangID,sum(DonGia*SoLuong)as 'tongbill',NgayBan\r\nfrom tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID \r\nwhere DAY(NgayBan)= DAY(GETDATE())\r\ngroup by dh.DonHangID,ngayban ";  // lay het du lieu trong bang sinh vien
+
+            }
+            if (comboBox1.SelectedIndex == 3)
+            {
+                sql = "select dh.DonHangID,sum(DonGia*SoLuong)as 'tongbill',NgayBan\r\nfrom tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID \r\nwhere MONTH(NgayBan)> MONTH(GETDATE())-1\r\ngroup by dh.DonHangID,ngayban";  // lay het du lieu trong bang sinh vien
+
+            }
+            if (comboBox1.SelectedIndex == 4)
+            {
+                sql = "select dh.DonHangID,sum(DonGia*SoLuong)as 'tongbill',NgayBan\r\nfrom tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID \r\nwhere MONTH(NgayBan)> MONTH(GETDATE())-3\r\ngroup by dh.DonHangID,ngayban";  // lay het du lieu trong bang sinh vien
+
+            }
+            SqlConnection cnn = new SqlConnection(strcon);
+            cnn.Open();
+            SqlCommand com = new SqlCommand(sql, cnn); //bat dau truy van
+            com.CommandType = CommandType.Text;
+            SqlDataAdapter da = new SqlDataAdapter(com); //chuyen du lieu ve
+            DataTable dt = new DataTable(); //tạo một kho ảo để lưu trữ dữ liệu
+            da.Fill(dt);  // đổ dữ liệu vào kho
+            cnn.Close();  // đóng kết nối
+            dataHoaDon.DataSource = dt;
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            string sql = "select dh.DonHangID,sum(DonGia*SoLuong)as 'tongbill',dh.NgayBan\r\nfrom tbl_hang h inner join tbl_hangban hb on hb.hangid = h.hangid inner join tbl_DonHang dh on dh.DonHangID = h.DonHangID \r\nwhere DAY(NgayBan) = "+dateTimePicker1.Value.Day + " and MONTH(NgayBan) = "+dateTimePicker1.Value.Month + "  and YEAR(NgayBan) = "+dateTimePicker1.Value.Year +"group by dh.DonHangID,dh.NgayBan \r\n";  // lay het du lieu trong bang sinh vien
+            SqlConnection cnn = new SqlConnection(strcon);
+            cnn.Open();
+            SqlCommand com = new SqlCommand(sql, cnn); //bat dau truy van
+            com.CommandType = CommandType.Text;
+            SqlDataAdapter da = new SqlDataAdapter(com); //chuyen du lieu ve
+            DataTable dt = new DataTable(); //tạo một kho ảo để lưu trữ dữ liệu
+            da.Fill(dt);  // đổ dữ liệu vào kho
+            cnn.Close();  // đóng kết nối
+            dataHoaDon.DataSource = dt;
+        }
+
+        private void GroupQUANLI_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnThemItem_Click(object sender, EventArgs e)
+        {
+            MENUThemItem themitem = new MENUThemItem();
+            themitem.Show();
+        }
+        public static event EventHandler Button2_Click_2;
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+            if (Button2_Click_2 != null)
+                Button2_Click_2.Invoke(this, e);
         }
     }
 }

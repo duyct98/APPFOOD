@@ -36,10 +36,10 @@
             // tenFood
             // 
             this.tenFood.AutoSize = true;
-            this.tenFood.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.tenFood.Location = new System.Drawing.Point(6, 15);
+            this.tenFood.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tenFood.Location = new System.Drawing.Point(3, 9);
             this.tenFood.Name = "tenFood";
-            this.tenFood.Size = new System.Drawing.Size(47, 24);
+            this.tenFood.Size = new System.Drawing.Size(31, 15);
             this.tenFood.TabIndex = 0;
             this.tenFood.Text = "Tên";
             this.tenFood.Click += new System.EventHandler(this.tenFood_Click);
@@ -47,10 +47,10 @@
             // SoLuong
             // 
             this.SoLuong.Enabled = false;
-            this.SoLuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.SoLuong.Location = new System.Drawing.Point(331, 24);
+            this.SoLuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SoLuong.Location = new System.Drawing.Point(122, 25);
             this.SoLuong.Name = "SoLuong";
-            this.SoLuong.Size = new System.Drawing.Size(40, 29);
+            this.SoLuong.Size = new System.Drawing.Size(40, 21);
             this.SoLuong.TabIndex = 3;
             this.SoLuong.Text = "0";
             this.SoLuong.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
@@ -59,10 +59,10 @@
             // 
             this.Gia.AutoSize = true;
             this.Gia.Enabled = false;
-            this.Gia.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.Gia.Location = new System.Drawing.Point(12, 39);
+            this.Gia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Gia.Location = new System.Drawing.Point(3, 28);
             this.Gia.Name = "Gia";
-            this.Gia.Size = new System.Drawing.Size(41, 24);
+            this.Gia.Size = new System.Drawing.Size(29, 15);
             this.Gia.TabIndex = 4;
             this.Gia.Text = "Giá";
             // 
@@ -74,7 +74,7 @@
             this.Controls.Add(this.SoLuong);
             this.Controls.Add(this.tenFood);
             this.Name = "itemFoodDonHang";
-            this.Size = new System.Drawing.Size(385, 73);
+            this.Size = new System.Drawing.Size(174, 52);
             this.Load += new System.EventHandler(this.itemFoodDonHang_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

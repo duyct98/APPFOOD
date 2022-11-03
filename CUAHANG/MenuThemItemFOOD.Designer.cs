@@ -30,7 +30,6 @@
         {
             this.txtTenFood = new System.Windows.Forms.TextBox();
             this.txtGiaFood = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,6 +38,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,16 +57,6 @@
             this.txtGiaFood.Name = "txtGiaFood";
             this.txtGiaFood.Size = new System.Drawing.Size(235, 31);
             this.txtGiaFood.TabIndex = 1;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::CUAHANG.Properties.Resources.noimage;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(263, 24);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(170, 170);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
             // 
             // comboBox1
             // 
@@ -147,6 +137,17 @@
             this.button3.TabIndex = 9;
             this.button3.Text = "Huỷ";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::CUAHANG.Properties.Resources.noimage;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(263, 24);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(170, 170);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
             // 
             // MenuThemItemFOOD
             // 
@@ -165,6 +166,7 @@
             this.Controls.Add(this.txtTenFood);
             this.Name = "MenuThemItemFOOD";
             this.Text = "MenuThemItemFOOD";
+            this.Load += new System.EventHandler(this.MenuThemItemFOOD_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

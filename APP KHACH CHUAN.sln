@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APP KHACH CHUAN", "APP KHACH CHUAN\APP KHACH CHUAN.csproj", "{75A84E1D-F870-454B-80B5-BA7012F4E474}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APP nhân viên", "APP KHACH CHUAN\APP nhân viên.csproj", "{75A84E1D-F870-454B-80B5-BA7012F4E474}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CUAHANG", "CUAHANG\CUAHANG.csproj", "{BA26188F-F0AC-438A-943D-E1D693D9D898}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChuCuaHang", "CUAHANG\ChuCuaHang.csproj", "{BA26188F-F0AC-438A-943D-E1D693D9D898}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

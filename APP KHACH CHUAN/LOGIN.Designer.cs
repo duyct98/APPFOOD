@@ -125,7 +125,7 @@
             this.txtPass.Name = "txtPass";
             this.txtPass.Size = new System.Drawing.Size(370, 26);
             this.txtPass.TabIndex = 3;
-            this.txtPass.Text = "123";
+            this.txtPass.UseSystemPasswordChar = true;
             // 
             // txtTaiKhoan
             // 
@@ -133,7 +133,7 @@
             this.txtTaiKhoan.Name = "txtTaiKhoan";
             this.txtTaiKhoan.Size = new System.Drawing.Size(370, 26);
             this.txtTaiKhoan.TabIndex = 2;
-            this.txtTaiKhoan.Text = "duycaythue";
+            this.txtTaiKhoan.Text = "bấm đăng kí tạo tài khoản mật khẩu";
             // 
             // btnDangNhap
             // 

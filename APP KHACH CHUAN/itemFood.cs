@@ -194,15 +194,80 @@ namespace APP_KHACH_CHUAN
             
         }
 
+        public void getDataFoodTheoID(int hangID,int donhangid) // 
+        {
+
+
+            while (true)
+            {
+                dem++;
+                
+                {
+                    tenFood = f1.Laydatasql("select tenhang from view_Hoadon2 where hangid=" + hangID + " and donhangid = "+donhangid+"");
+                    giaFood = Convert.ToDouble(f1.Laydatasql("select dongia from view_Hoadon2  where hangid=" + hangID + " and donhangid =" + donhangid + ""));
+                    txtGiaFood.Text = giaFood.ToString();
+                    txtTenFood.Text = tenFood;
+                    string ss = "SELECT anh from view_Hoadon2 where hangid=" + hangID + " and donhangid= " + donhangid + "";
+
+                    SqlConnection conn = new SqlConnection(f1.strcon);
+                    conn.Open();
+                    SqlCommand command = new SqlCommand(ss, conn);
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    if (reader.HasRows)
+                    {
+                        byte[] img = (byte[])(reader[0]);
+
+                        MemoryStream ms = new MemoryStream(img);
+
+                        picturebox1.BackgroundImage = Image.FromStream(ms);
+
+                    }
+
+                    break;
+
+
+                }
+
+
+
+            }
+
+
+        }
+
 
         public void doiMauItemFood(int data1, int data2, int data3)
         {
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(data1)))), ((int)(((byte)(data2)))), ((int)(((byte)(data3)))));
 
         }
+
+
+        public void Button2_Click_2(object sender, EventArgs e)
+        {
+            
+            btnSua.Show();
+           
+        }
+
         public void itemFood_Load(object sender, EventArgs e)
         {
-           
+            btnSua.Show();
+            btnHuy.Show();
+            btnThem.Show();
+            btnThemAnh.Hide();
+            btnCancel.Hide();
+            txtDoiGia.Hide();
+            txtDoiTen.Hide();
+            txtGiaFood.Show();
+            txtTenFood.Show();
+            btnSave.Hide();
+            txtDoiTen.Text = txtTenFood.Text;
+            txtDoiGia.Text = txtGiaFood.Text;
+
+            Form1.Button2_Click_2 += Button2_Click_2;
         }
 
 
@@ -223,6 +288,88 @@ namespace APP_KHACH_CHUAN
         public void insertDonHang()
         {
             
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            btnHuy.Hide();
+            btnThem.Hide();
+            btnThemAnh.Show();
+            btnCancel.Show();
+            txtDoiGia.Show();
+            txtDoiTen.Show();
+            txtGiaFood.Hide();
+            txtTenFood.Hide();
+            btnSua.Hide();
+            btnSave.Show();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnSua.Show();
+            btnHuy.Show();
+            btnThem.Show();
+            btnThemAnh.Hide();
+            btnCancel.Hide();
+            txtDoiGia.Hide();
+            txtDoiTen.Hide();
+            txtGiaFood.Show();
+            txtTenFood.Show();
+            btnSave.Hide();
+        }
+        public byte[] imageToByteArray(System.Drawing.Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            return ms.ToArray();
+        }
+        //byte[] -> ảnh
+        public Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
+        }
+        string ToVarbinary(byte[] data)
+        {
+            var sb = new StringBuilder((data.Length * 2) + 2);
+            sb.Append("0x");
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                sb.Append(data[i].ToString("X2"));
+            }
+
+            return sb.ToString();
+        }
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            f1.sqlcode("UPDATE tbl_hangban set tenhang = N'" + txtDoiTen.Text + "', dongia = N'" + txtDoiGia.Text + "',anh = " + ToVarbinary(imageToByteArray(picturebox1.BackgroundImage)) + " WHERE  hangid = '" + idFood + "'");
+            btnSua.Show();
+            btnHuy.Show();
+            btnThem.Show();
+            btnThemAnh.Hide();
+            btnCancel.Hide();
+            txtDoiGia.Hide();
+            txtDoiTen.Hide();
+            txtGiaFood.Show();
+            txtTenFood.Show();
+            btnSave.Hide();
+            giaFood = Convert.ToDouble(txtDoiGia.Text);
+            txtGiaFood.Text = giaFood.ToString();
+            tenFood = txtDoiTen.Text;
+            txtTenFood.Text=tenFood.ToString();
+        }
+
+        private void btnThemAnh_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog();
+
+            //Kiểm tra xem người dùng đã chọn file chưa
+            if (result == DialogResult.OK)
+            {
+                picturebox1.BackgroundImage = Image.FromFile(openFileDialog1.FileName);
+            }
         }
     }
 }

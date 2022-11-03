@@ -9,15 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CUAHANG
+namespace APP_KHACH_CHUAN
 {
-    public partial class MenuThemItemFOOD : Form
+    public partial class MENUThemItem : Form
     {
-        public MenuThemItemFOOD()
+        public MENUThemItem()
         {
             InitializeComponent();
         }
-        CUAHANG f1 = new CUAHANG();
+        Form1 f1 = new Form1();
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult result = openFileDialog1.ShowDialog();
@@ -27,6 +27,10 @@ namespace CUAHANG
             {
                 pictureBox1.BackgroundImage = Image.FromFile(openFileDialog1.FileName);
             }
+        }
+
+        private void MENUThemItem_Load(object sender, EventArgs e)
+        {
 
         }
         public byte[] imageToByteArray(System.Drawing.Image imageIn)
@@ -43,7 +47,7 @@ namespace CUAHANG
             return returnImage;
         }
 
-      
+
         string ToVarbinary(byte[] data)
         {
             var sb = new StringBuilder((data.Length * 2) + 2);
@@ -69,23 +73,17 @@ namespace CUAHANG
         {
             if (txtTenFood.Text.Trim() != "" && IsNumber(txtGiaFood.Text) == true && comboBox1.Text.Trim() != "")
             {
-                f1.sqlcode("INSERT INTO tbl_hangban(loai,TenHang,DonGia,Anh) values ('" + comboBox1.Text + "','" + txtTenFood.Text + "','" + txtGiaFood.Text + "'," + ToVarbinary(imageToByteArray(pictureBox1.BackgroundImage)) + ")");
+                f1.sqlcode("INSERT INTO tbl_hangban(loai,TenHang,DonGia,Anh) values (N'" + comboBox1.Text + "',N'" + txtTenFood.Text + "','" + txtGiaFood.Text + "'," + ToVarbinary(imageToByteArray(pictureBox1.BackgroundImage)) + ")");
                 MessageBox.Show("OK , Thêm món thành công");
-                Application.Exit();
+                this.Close();
             }
             else MessageBox.Show("Thông tin nhập chưa chính xác");
-
 
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void MenuThemItemFOOD_Load(object sender, EventArgs e)
-        {
-
+            this.Close();
         }
     }
 }
